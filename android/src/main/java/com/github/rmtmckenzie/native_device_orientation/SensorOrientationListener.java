@@ -25,8 +25,12 @@ public class SensorOrientationListener implements IOrientationListener {
         orientationEventListener = new OrientationEventListener(context, SensorManager.SENSOR_DELAY_NORMAL) {
             @Override
             public void onOrientationChanged(int angle) {
-                OrientationReader.Orientation newOrientation = reader.calculateSensorOrientation(angle);
-
+                OrientationReader.Orientation newOrientation;
+                if(angle == ORIENTATION_UNKNOWN){
+                    newOrientation = OrientationReader.Orientation.Unknown;
+                }else {
+                    newOrientation = reader.calculateSensorOrientation(angle);
+                }
                 if (!newOrientation.equals(lastOrientation)) {
                     lastOrientation = newOrientation;
                     callback.receive(newOrientation);
