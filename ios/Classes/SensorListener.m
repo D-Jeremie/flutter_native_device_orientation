@@ -23,15 +23,17 @@
         motionManager.deviceMotionUpdateInterval = 0.1;
         
         int length = 10;
-        double gravityX[10] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
-        double gravityY[10] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
-        double gravityZ[10] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
+        double gravityX[10];
+        double gravityY[10];
+        double gravityZ[10];
 
         double *ptrX = gravityX;
         double *ptrY = gravityY;
         double *ptrZ = gravityZ;
 
         __block int index = 0;
+
+        __block int growingSize = 0;
         
         [motionManager startDeviceMotionUpdatesToQueue:[NSOperationQueue mainQueue] withHandler:^(CMDeviceMotion *data, NSError *error) {
             NSString *orientation;
@@ -40,19 +42,24 @@
             ptrY[index]= data.gravity.y;
             ptrZ[index]= data.gravity.z;
 
+            growingSize = growingSize + 1;
+            if(growingSize>length){
+                growingSize = length;
+            }
+
             float gX = 0.0;
             float gY = 0.0;
             float gZ = 0.0;
 
-            for(int i=0; i<length; i++){
+            for(int i=0; i<growingSize; i++){
                 gX+= ptrX[i];
                 gY+= ptrY[i];
                 gZ+= ptrZ[i];
             }
 
-            gX = gX/length;
-            gY = gY/length;
-            gZ = gZ/length;
+            gX = gX/growingSize;
+            gY = gY/growingSize;
+            gZ = gZ/growingSize;
 
             index = index + 1;
 
