@@ -52,6 +52,7 @@
             float gZ = 0.0;
 
             for(int i=0; i<growingSize; i++){
+                NSLog(@"ptrX[%d] %f", i, ptrX[i]);
                 gX+= ptrX[i];
                 gY+= ptrY[i];
                 gZ+= ptrZ[i];
