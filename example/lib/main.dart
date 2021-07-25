@@ -36,7 +36,6 @@ class _MyAppState extends State<MyApp> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   FloatingActionButton(
-                    child: Text('Sensor'),
                     onPressed: () async {
                       final orientation = await NativeDeviceOrientationCommunicator().orientation(useSensor: true);
                       ScaffoldMessenger.of(context).showSnackBar(
@@ -46,10 +45,10 @@ class _MyAppState extends State<MyApp> {
                         ),
                       );
                     },
+                    child: Text('Sensor'),
                   ),
                   SizedBox(height: 10),
                   FloatingActionButton(
-                    child: Text('UI'),
                     onPressed: () async {
                       final orientation = await NativeDeviceOrientationCommunicator().orientation(useSensor: false);
                       ScaffoldMessenger.of(context).showSnackBar(
@@ -59,6 +58,7 @@ class _MyAppState extends State<MyApp> {
                         ),
                       );
                     },
+                    child: Text('UI'),
                   ),
                 ],
               );

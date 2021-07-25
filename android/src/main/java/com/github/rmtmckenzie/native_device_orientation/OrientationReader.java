@@ -7,6 +7,9 @@ import android.view.WindowManager;
 
 import androidx.arch.core.util.Function;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class OrientationReader {
 
     public OrientationReader(Context context) {
@@ -70,6 +73,13 @@ public class OrientationReader {
 
     }
 
+
+    private final Orientation[] orientations = new Orientation[10];
+
+    private int index = 0;
+
+    private double max = 0;
+    
     public Orientation calculateSensorOrientation(int angle) {
         Orientation returnOrientation;
 
@@ -106,6 +116,39 @@ public class OrientationReader {
                 returnOrientation = Orientation.Unknown;
 
         }
+        
+        orientations[index] = returnOrientation;
+        
+        index++;
+        
+        if(index >= orientations.length){
+            index = 0;
+        }
+
+        Map<Orientation, Integer> orientationsCounters = new HashMap<>();
+
+       for(Orientation orientation : orientations){
+           if(orientation != null) {
+               if (!orientationsCounters.containsKey(orientation)) {
+                   orientationsCounters.put(orientation, 1);
+               } else {
+
+                   int value = orientationsCounters.get(orientation);
+
+                   orientationsCounters.put(orientation, value + 1);
+               }
+           }
+       }
+
+       int max = 0;
+
+
+       for(Map.Entry<Orientation, Integer> orientation: orientationsCounters.entrySet()){
+           if(orientation.getValue()>max){
+               max = orientation.getValue();
+               returnOrientation = orientation.getKey();
+           }
+       }
 
         return returnOrientation;
     }

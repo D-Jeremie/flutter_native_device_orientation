@@ -105,7 +105,7 @@ class NativeDeviceOrientationReader extends StatefulWidget {
       return true;
     }());
 
-    return inheritedNativeOrientation!.nativeOrientation!;
+    return inheritedNativeOrientation!.nativeOrientation;
   }
 
   @override
@@ -171,7 +171,7 @@ class NativeDeviceOrientationReaderState extends State<NativeDeviceOrientationRe
                       );
                     } else {
                       return _InheritedNativeDeviceOrientation(
-                        nativeOrientation: asyncResult.data,
+                        nativeOrientation: asyncResult.data!,
                         child: Builder(builder: widget.builder),
                       );
                     }
@@ -179,7 +179,7 @@ class NativeDeviceOrientationReaderState extends State<NativeDeviceOrientationRe
             });
           } else {
             return _InheritedNativeDeviceOrientation(
-              nativeOrientation: asyncResult.data,
+              nativeOrientation: asyncResult.data!,
               child: Builder(builder: widget.builder),
             );
           }
@@ -190,14 +190,13 @@ class NativeDeviceOrientationReaderState extends State<NativeDeviceOrientationRe
 }
 
 class _InheritedNativeDeviceOrientation extends InheritedWidget {
-  final NativeDeviceOrientation? nativeOrientation;
+  final NativeDeviceOrientation nativeOrientation;
 
   const _InheritedNativeDeviceOrientation({
     Key? key,
     required this.nativeOrientation,
     required Widget child,
-  })   : assert(nativeOrientation != null),
-        super(key: key, child: child);
+  }) : super(key: key, child: child);
 
   @override
   bool updateShouldNotify(_InheritedNativeDeviceOrientation oldWidget) =>

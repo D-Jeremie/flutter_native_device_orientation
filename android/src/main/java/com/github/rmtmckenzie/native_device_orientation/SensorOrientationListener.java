@@ -4,6 +4,7 @@ import android.content.Context;
 import android.hardware.SensorManager;
 import android.view.OrientationEventListener;
 
+import io.flutter.Log;
 public class SensorOrientationListener implements IOrientationListener {
 
     private final OrientationReader reader;
@@ -22,10 +23,11 @@ public class SensorOrientationListener implements IOrientationListener {
     public void startOrientationListener() {
         if (orientationEventListener != null) return;
 
-        orientationEventListener = new OrientationEventListener(context, SensorManager.SENSOR_DELAY_NORMAL) {
+        orientationEventListener = new OrientationEventListener(context, SensorManager.SENSOR_DELAY_UI) {
             @Override
             public void onOrientationChanged(int angle) {
                 OrientationReader.Orientation newOrientation;
+
                 if(angle == ORIENTATION_UNKNOWN){
                     newOrientation = OrientationReader.Orientation.Unknown;
                 }else {
