@@ -61,12 +61,18 @@
             gY = gY/growingSize;
             gZ = gZ/growingSize;
 
+
             index = index + 1;
 
             if(index>=10){
                 index = 0;
             }
-
+            
+            NSLog(@"gX %f", gX);
+            NSLog(@"gY %f", gY);
+            NSLog(@"gZ %f", gZ);
+            NSLog(@"*********");
+            
             if(fabs(gZ)>fabs(gY) && fabs(gZ)>fabs(gX)){
                 orientation = UNKNOWN;
             }

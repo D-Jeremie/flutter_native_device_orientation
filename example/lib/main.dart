@@ -12,6 +12,14 @@ class _MyAppState extends State<MyApp> {
   bool useSensor = false;
 
   @override
+  void initState() {
+    NativeDeviceOrientationCommunicator().onOrientationChanged(useSensor: true).listen((event) {
+      print("Orientation : ${event}");
+    });
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
@@ -22,14 +30,16 @@ class _MyAppState extends State<MyApp> {
               Switch(value: useSensor, onChanged: (val) => setState(() => useSensor = val)),
             ],
           ),
-          body: NativeDeviceOrientationReader(
-            builder: (context) {
-              final orientation = NativeDeviceOrientationReader.orientation(context);
-              print('Received new orientation: $orientation');
-              return Center(child: Text('Native Orientation: $orientation\n'));
-            },
-            useSensor: useSensor,
-          ),
+          body: true
+              ? Container()
+              : NativeDeviceOrientationReader(
+                  builder: (context) {
+                    final orientation = NativeDeviceOrientationReader.orientation(context);
+                    //print('Received new orientation: $orientation');
+                    return Center(child: Text('Native Orientation: $orientation\n'));
+                  },
+                  useSensor: useSensor,
+                ),
           floatingActionButton: Builder(
             builder: (context) {
               return Column(
