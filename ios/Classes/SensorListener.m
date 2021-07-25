@@ -38,9 +38,12 @@
         [motionManager startDeviceMotionUpdatesToQueue:[NSOperationQueue mainQueue] withHandler:^(CMDeviceMotion *data, NSError *error) {
             NSString *orientation;
 
-            ptrX[index]= data.gravity.x;
-            ptrY[index]= data.gravity.y;
-            ptrZ[index]= data.gravity.z;
+            ptrX[index] = data.gravity.x;
+            ptrY[index] = data.gravity.y;
+            ptrZ[index] = data.gravity.z;
+            
+            NSLog(@"index %d", index);
+            NSLog(@"ptrX[index] %f", ptrX[index]);
 
             growingSize = growingSize + 1;
             if(growingSize>length){
@@ -69,9 +72,9 @@
                 index = 0;
             }
 
+
+
             NSLog(@"gravity.x %f", data.gravity.x);
-            NSLog(@"gravity.y %f", data.gravity.y);
-            NSLog(@"gravity.z %f", data.gravity.z);
             NSLog(@"*********");
             
             NSLog(@"gX %f", gX);
