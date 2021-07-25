@@ -20,10 +20,10 @@
    
 
     if([motionManager isDeviceMotionAvailable] == YES){
-        motionManager.deviceMotionUpdateInterval = 0.2;
+        motionManager.deviceMotionUpdateInterval = 0.1;
         
         int length = 10;
-        __block double gravityX[10] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
+        double gravityX[10] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
         double gravityY[10] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
         double gravityZ[10] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
 
@@ -56,7 +56,7 @@
 
             index = index + 1;
 
-            if(index>10){
+            if(index>=10){
                 index = 0;
             }
 
