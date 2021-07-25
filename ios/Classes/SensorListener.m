@@ -67,6 +67,11 @@
             if(index>=10){
                 index = 0;
             }
+
+            NSLog(@"gravity.x %f", data.gravity.x);
+            NSLog(@"gravity.y %f", data.gravity.y);
+            NSLog(@"gravity.z %f", data.gravity.z);
+            NSLog(@"*********");
             
             NSLog(@"gX %f", gX);
             NSLog(@"gY %f", gY);
