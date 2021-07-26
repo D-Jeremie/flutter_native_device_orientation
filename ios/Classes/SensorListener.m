@@ -23,31 +23,45 @@
         motionManager.deviceMotionUpdateInterval = 0.1;
         
         int length = 10;
-        double gravityX[10];
-        double gravityY[10];
+
+        NSMutableArray *gravityX = [[NSMutableArray alloc] initWithCapacity:0];
+        NSMutableArray *gravityY = [[NSMutableArray alloc] initWithCapacity:0];
+        NSMutableArray *gravityZ = [[NSMutableArray alloc] initWithCapacity:0];
+        //NSArray gravityX[10];
+        /*double gravityY[10];
         double gravityZ[10];
 
         double *ptrX = gravityX;
         double *ptrY = gravityY;
-        double *ptrZ = gravityZ;
+        double *ptrZ = gravityZ;*/
 
-        __block int index = 0;
+         __block NSInteger index = 0;
 
-        __block int growingSize = 0;
+         __block NSInteger growingSize = 0;
         
         [motionManager startDeviceMotionUpdatesToQueue:[NSOperationQueue mainQueue] withHandler:^(CMDeviceMotion *data, NSError *error) {
             NSString *orientation;
 
+            [gravityX addObject:[NSNumber numberWithDouble:data.gravity.x]];
+            [gravityY addObject:[NSNumber numberWithDouble:data.gravity.y]];
+            [gravityZ addObject:[NSNumber numberWithDouble:data.gravity.z]];
+            
+            
+            
+/*
             ptrX[index] = data.gravity.x;
             ptrY[index] = data.gravity.y;
             ptrZ[index] = data.gravity.z;
-            
-            NSLog(@"index %d", index);
-            NSLog(@"ptrX[index] %f", ptrX[index]);
 
+            NSLog(@"index %ld", index);
+            NSLog(@"ptrX[index] %f", ptrX[index]);
+*/
             growingSize = growingSize + 1;
             if(growingSize>length){
                 growingSize = length;
+                [gravityX removeObjectAtIndex:0];
+                [gravityY removeObjectAtIndex:0];
+                [gravityZ removeObjectAtIndex:0];
             }
 
             float gX = 0.0;
@@ -55,10 +69,15 @@
             float gZ = 0.0;
 
             for(int i=0; i<growingSize; i++){
-                NSLog(@"ptrX[%d] %f", i, ptrX[i]);
+                NSLog(@"gravityX[%d] %f", i, [[gravityX objectAtIndex:i]doubleValue]);
+                
+                gX+= [[gravityX objectAtIndex:i]doubleValue];
+                gY+= [[gravityY objectAtIndex:i]doubleValue];
+                gZ+= [[gravityZ objectAtIndex:i]doubleValue];
+               /* NSLog(@"ptrX[%d] %f", i, ptrX[i]);
                 gX+= ptrX[i];
                 gY+= ptrY[i];
-                gZ+= ptrZ[i];
+                gZ+= ptrZ[i];*/
             }
 
             gX = gX/growingSize;
